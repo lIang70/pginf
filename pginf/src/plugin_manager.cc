@@ -5,7 +5,7 @@
 #include "global.h"
 
 // Import tinyxml
-#include <tinyxml/tinyxml.h>
+#include <tinyxml.h>
 
 PGINF_NAMESPACE_BEGIN()
 

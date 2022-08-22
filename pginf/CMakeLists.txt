@@ -10,19 +10,21 @@ ADD_DEFINITIONS(-DPGINF_EXPORTS -DPGINF_USING -DTIXML_USE_STL -DPGINF_DEBUG)
 # add header
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include)
 
+# add tinyxml
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/tinyxml/include)
+FILE(GLOB TINYXML_SOURCES "3rdparty/tinyxml/src/*.cpp")
+
+# add src
 FILE(GLOB PROJECT_SOURCES "src/*.cc")
 FILE(GLOB HEADER_SOURCES ${CMAKE_SOURCE_DIR}/include/pginf/*.h)
 
 # Add the source code to the project's executable。
-ADD_LIBRARY(pginf STATIC ${PROJECT_SOURCES} ${HEADER_SOURCES})
+ADD_LIBRARY(pginf STATIC ${TINYXML_SOURCES} ${PROJECT_SOURCES} ${HEADER_SOURCES})
 # Set properties: output path
 SET_TARGET_PROPERTIES(pginf PROPERTIES  ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib
                                         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
-ADD_DEPENDENCIES(pginf tinyxml)
-TARGET_LINK_LIBRARIES(pginf PRIVATE tinyxml)
-
-OPTION(pginf_build_tests "Build all of pginf's own tests." ON)
+OPTION(pginf_build_tests "Build all of pginf's own tests." OFF)
 
 if (pginf_build_tests)
 
@@ -30,7 +32,7 @@ if (pginf_build_tests)
     ENABLE_TESTING()
     INCLUDE(GoogleTest)
 
-    SET(TARGET_LIBRARIES pginf tinyxml)
+    SET(TARGET_LIBRARIES pginf)
 
     # Add Unit Test
     GOOGLE_CXX_TEST_UNIT(dir_test ${CMAKE_SOURCE_DIR}/bin/test)
