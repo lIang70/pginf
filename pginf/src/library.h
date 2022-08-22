@@ -2,7 +2,7 @@
 #ifndef _PGINF_LIBRARY_H_
 #define _PGINF_LIBRARY_H_
 
-#include "global.h"
+#include "internal_global.h"
 
 PGINF_NAMESPACE_BEGIN()
 

@@ -2,7 +2,7 @@
 #ifndef _PGINF_DIR_H_
 #define _PGINF_DIR_H_
 
-#include "global.h"
+#include "internal_global.h"
 
 PGINF_NAMESPACE_BEGIN()
 NAMESPACE_BEGIN(dir_tool)

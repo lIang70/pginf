@@ -1,7 +1,7 @@
 #include <pginf/pipe.h>
 #include <pginf/event_mate.h>
 
-#include "global.h"
+#include "internal_global.h"
 #include "core_impl.h"
 
 PGINF_NAMESPACE_BEGIN()

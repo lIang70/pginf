@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _GLOBAL_H_
-#define _GLOBAL_H_
+#ifndef _INTERNAL_GLOBAL_H_
+#define _INTERNAL_GLOBAL_H_
 
 #include <pginf/pginf_global.h>
 #include <pginf/pflags.h>
@@ -93,4 +93,4 @@ void p_assert(const char *assertion, const char *file, int line) noexcept {
 PGINF_NAMESPACE_END()
 
 
-#endif // !_GLOBAL_H_
+#endif // !_INTERNAL_GLOBAL_H_

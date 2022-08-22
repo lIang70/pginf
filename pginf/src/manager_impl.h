@@ -2,7 +2,7 @@
 #ifndef _PGINF_MANAGER_IMPL_H_
 #define _PGINF_MANAGER_IMPL_H_
 
-#include "global.h"
+#include "internal_global.h"
 #include "host_impl.h"
 
 #include <pginf/host.h>

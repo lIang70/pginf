@@ -2,7 +2,7 @@
 #ifndef _READ_WRITE_LOCK_H_
 #define _READ_WRITE_LOCK_H_
 
-#include "global.h"
+#include "internal_global.h"
 
 /****************************************
  * @brief Implementation of read and write lock.

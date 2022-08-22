@@ -2,7 +2,7 @@
 #ifndef _PGINF_HOST_IMPL_H_
 #define _PGINF_HOST_IMPL_H_
 
-#include "global.h"
+#include "internal_global.h"
 
 PGINF_NAMESPACE_BEGIN()
 

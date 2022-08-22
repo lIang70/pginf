@@ -2,7 +2,6 @@
 #ifndef _PGINF_CORE_IMPL_H_
 #define _PGINF_CORE_IMPL_H_
 
-#include "global.h"
 #include "read_write_lock.h"
 
 #include <pginf/pipe.h>

@@ -2,7 +2,7 @@
 
 #include "manager_impl.h"
 #include "dir_tool.h"
-#include "global.h"
+#include "internal_global.h"
 
 // Import tinyxml
 #include <tinyxml.h>
