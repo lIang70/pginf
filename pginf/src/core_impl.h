@@ -39,7 +39,7 @@ protected:
      * @param handle Sent data operations.
      * @param event Data to be sent.
      ****************************************/
-    static void SendData(MsgHandle * handle, _Event & event, _Shared_Threads & join_threads, Pipe_Type activate_way);
+    static void SendData(_Topic topic, MsgHandle * handle, _Event & event, _Shared_Threads & join_threads, Pipe_Type activate_way);
 
     /****************************************
      * @brief Construct a new Core_Impl object

@@ -6,19 +6,19 @@ std::once_flag  Core_Impl::s_oc_flag_;
 Core_Impl *     Core_Impl::s_core_impl_ = nullptr;
 
 void 
-Core_Impl::SendData(MsgHandle * handle, _Event & event, _Shared_Threads & join_threads, Pipe_Type activate_way) {
+Core_Impl::SendData(_Topic topic, MsgHandle * handle, _Event & event, _Shared_Threads & join_threads, Pipe_Type activate_way) {
     Pipe_Type current_type = activate_way == DEFAULTCONNECT ? 
         (Pipe_Type)handle->get_pipe_type().ToInt() : activate_way;
 
     switch (current_type) {
     case Pipe_Type::DIRECTLYCONNECT:
-        handle->Handle(current_type, event);
+        handle->Handle(topic, event);
         break;
     case Pipe_Type::DETACHCONNECT:
-        std::make_shared<std::thread>([=] (_Event & event) { handle->Handle(current_type, event); }, event)->detach();
+        std::make_shared<std::thread>([=] (_Event & event) { handle->Handle(topic, event); }, event)->detach();
         break;
     case Pipe_Type::JOINCONNECT:
-        join_threads.push_back(std::make_shared<std::thread>([=] (_Event & event) { handle->Handle(current_type, event); }, event));
+        join_threads.push_back(std::make_shared<std::thread>([=] (_Event & event) { handle->Handle(topic, event); }, event));
         break;
     default:
         break;
@@ -61,7 +61,7 @@ Core_Impl::Active(_Topic topic, _Event & event, Pipe_Type activate_way) {
                 subscriber++;
                 continue;
             }
-            SendData(subscriber->second, event, join_threads, activate_way);
+            SendData(topic, subscriber->second, event, join_threads, activate_way);
             subscriber++;
         }
     }
