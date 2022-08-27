@@ -13,9 +13,10 @@ PGINF_NAMESPACE_BEGIN()
  * 
  ****************************************/
 typedef enum _Pipe_Type {
-    DIRECTLYCONNECT = (0),
-    DETACHCONNECT   = (1),
-    JOINCONNECT     = (2),
+    DEFAULTCONNECT  = (0),
+    DIRECTLYCONNECT = (1),
+    DETACHCONNECT   = (2),
+    JOINCONNECT     = (3),
 } Pipe_Type;
 P_DECLARE_FLAGS(PipeType, Pipe_Type)
 
@@ -27,12 +28,13 @@ class MsgHandle {
     PipeType pipe_type_;
 
 public:
+    using _Topic = int;
     using _Event = std::shared_ptr<EventMeta>;
 
     MsgHandle(PipeType pipe_type = _Pipe_Type::DIRECTLYCONNECT) 
         : pipe_type_(pipe_type) {}
     virtual ~MsgHandle() = default;
-    virtual void Handle(_Event & e) = 0;
+    virtual void Handle(_Topic topic, _Event & e) = 0;
     virtual bool IsNull() = 0;
     inline  PipeType get_pipe_type() const { return pipe_type_; }
 };
@@ -46,7 +48,7 @@ public:
 template<class _Class, typename _Func>
 class MsgHandleM 
     : public MsgHandle {
-    static_assert(bool(std::is_same<_Func, void(_Class::*)(MsgHandle::_Event&)>::value), "Function's parameter should be (std::shared_ptr<EventMeta>&) .");
+    static_assert(bool(std::is_same<_Func, void(_Class::*)(MsgHandle::_Topic, MsgHandle::_Event&)>::value), "Function's parameter should be (int, std::shared_ptr<EventMeta>&) .");
     
     using _Type  = PipeType;
 
@@ -71,7 +73,7 @@ public:
      * 
      * @param e Event data to process.
      ****************************************/
-    inline virtual void Handle(MsgHandle::_Event& e) override { (class_object_->*function_)(e); }
+    inline virtual void Handle(_Topic topic, MsgHandle::_Event& e) override { (class_object_->*function_)(topic, e); }
 
     /****************************************
      * @brief Determines whether the object pointer is empty.
@@ -83,6 +85,8 @@ public:
             auto name = typeid(*class_object_).name();
             return false;
         } catch (std::bad_typeid) {
+            return true;
+        } catch (...) {
             return true;
         }
     }

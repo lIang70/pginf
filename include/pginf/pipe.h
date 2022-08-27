@@ -16,7 +16,8 @@ class Core_Impl;
  ****************************************/
 class PGINF_API Pipe {
     using _Topic    = int;
-    using _Address  = std::array<unsigned char, sizeof(void*)>;
+    using _Pointer  = void*;
+    using _Address  = std::array<unsigned char, 2 * sizeof(_Pointer)>;
     using _Event    = EventMeta;
 
 private:
@@ -28,14 +29,17 @@ private:
      * @brief Transformation format
      * 
      ****************************************/
-    template<typename T>
-    static _Address ConvertAnyToFormat(const T element) {
+    template<typename A, typename B>
+    static _Address ConvertAnyToFormat(const A type_a, const B type_b) {
+        static_assert(  bool(sizeof(A) + sizeof(B) <= 2 * sizeof(_Pointer)), 
+                        "The size of both variables will overflow." );
         union Convert_t {
-            T base_;
-            _Address base_t_;
+            struct { A element_a_; B element_b_; } base_;
+            _Address base_a_;
         } result;
-        result.base_ = element;
-        return result.base_t_;
+        result.base_.element_a_ = type_a;
+        result.base_.element_b_ = type_b;
+        return result.base_a_;
     }
 
     /****************************************
@@ -70,7 +74,7 @@ public:
      * @param topic The topic to which data needs to be sent.
      * @param event Data to be sent.
      ****************************************/
-    static void Send(_Topic topic, _Event * event);
+    static void Send(_Topic topic, _Event * event, Pipe_Type pipe_type = _Pipe_Type::DEFAULTCONNECT);
 
     /****************************************
      * @brief Subscribe to data for a topic.
@@ -84,7 +88,7 @@ public:
     template<class _Interface_Object, typename _Func>
     static bool Subscribe(_Topic topic, _Interface_Object* interface_object, _Func function, PipeType pipe_type = _Pipe_Type::DIRECTLYCONNECT) {
         return _Subscribe(  topic, 
-                            ConvertAnyToFormat<_Func>(function), 
+                            ConvertAnyToFormat(interface_object, function), 
                             new MsgHandleM<_Interface_Object, _Func>(interface_object, function, pipe_type) );
     }
 
@@ -98,7 +102,7 @@ public:
     template<class _Interface_Object, typename _Func>
     static void Unsubscribe(_Topic topic, _Interface_Object* interface_object, _Func function) {
         _Unsubscribe(   topic, 
-                        ConvertAnyToFormat<_Func>(function) );
+                        ConvertAnyToFormat(interface_object, function) );
     }
 };
 

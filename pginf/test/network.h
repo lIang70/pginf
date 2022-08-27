@@ -10,6 +10,7 @@
 
 class Network
     : public pginf::Interface {
+    using _Topic    = int;
     using _Event    = std::shared_ptr<pginf::EventMeta>;
     using _Work     = std::shared_ptr<std::thread>;
 
@@ -17,7 +18,7 @@ class Network
     _Work   event_work_{};
 
     void Init();
-    void RecvMapEvent(_Event& event);
+    void RecvMapEvent(_Topic topic, _Event& event);
 public:
     Network();
     ~Network() override;

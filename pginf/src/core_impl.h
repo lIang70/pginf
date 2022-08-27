@@ -15,11 +15,14 @@ class MsgHandle;
  * 
  ****************************************/
 class Core_Impl {
-    using _Topic        = int;
-    using _Event        = std::shared_ptr<EventMeta>;
-    using _Address      = std::array<unsigned char, sizeof(void*)>;
-    using _Subscribers  = std::map<_Topic, std::map<_Address, MsgHandle*>>;
-    using _Topic_Lock   = std::map<_Topic, ReadWriteLock>;
+    using _Topic            = int;
+    using _Pointer          = void*;
+    using _Event            = std::shared_ptr<EventMeta>;
+    using _Shared_Thread    = std::shared_ptr<std::thread>;
+    using _Shared_Threads   = std::vector<_Shared_Thread>;
+    using _Address          = std::array<unsigned char, 2 * sizeof(_Pointer)>;
+    using _Subscribers      = std::map<_Topic, std::map<_Address, MsgHandle*>>;
+    using _Topic_Lock       = std::map<_Topic, ReadWriteLock>;
 
 private:
     static std::once_flag   s_oc_flag_;
@@ -36,7 +39,7 @@ protected:
      * @param handle Sent data operations.
      * @param event Data to be sent.
      ****************************************/
-    static void SendData(MsgHandle * handle, _Event & event);
+    static void SendData(MsgHandle * handle, _Event & event, _Shared_Threads & join_threads, Pipe_Type activate_way);
 
     /****************************************
      * @brief Construct a new Core_Impl object
@@ -71,7 +74,7 @@ public:
      * @param topic The topic of data.
      * @param event Data.
      ****************************************/
-    void Active(_Topic topic, _Event & event);
+    void Active(_Topic topic, _Event & event, Pipe_Type activate_way = DEFAULTCONNECT);
 
     /****************************************
      * @brief Subscription data.

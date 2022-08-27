@@ -16,7 +16,7 @@ Network::Init() {
 }
 
 void
-Network::RecvMapEvent(std::shared_ptr<pginf::EventMeta>& event) {
+Network::RecvMapEvent(_Topic topic, std::shared_ptr<pginf::EventMeta>& event) {
     MapEvent * map_event = static_cast<MapEvent*>(event.get());
     if (!map_event)
         return ;
@@ -32,6 +32,7 @@ Network::Network() {
 }
 
 Network::~Network() {
+    pginf::Pipe::Unsubscribe(PipeEventType::PIPE_MAP_EVENT, this, &Network::RecvMapEvent);
     thread_exit_ = true;
     if (event_work_->joinable())
         event_work_->join();

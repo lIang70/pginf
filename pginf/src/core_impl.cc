@@ -6,16 +6,19 @@ std::once_flag  Core_Impl::s_oc_flag_;
 Core_Impl *     Core_Impl::s_core_impl_ = nullptr;
 
 void 
-Core_Impl::SendData(MsgHandle * handle, _Event & event) {
-    switch (handle->get_pipe_type().ToInt()) {
+Core_Impl::SendData(MsgHandle * handle, _Event & event, _Shared_Threads & join_threads, Pipe_Type activate_way) {
+    Pipe_Type current_type = activate_way == DEFAULTCONNECT ? 
+        (Pipe_Type)handle->get_pipe_type().ToInt() : activate_way;
+
+    switch (current_type) {
     case Pipe_Type::DIRECTLYCONNECT:
-        handle->Handle(event);
+        handle->Handle(current_type, event);
         break;
     case Pipe_Type::DETACHCONNECT:
-        std::make_shared<std::thread>([=] (_Event & event) { handle->Handle(event); }, event)->detach();
+        std::make_shared<std::thread>([=] (_Event & event) { handle->Handle(current_type, event); }, event)->detach();
         break;
     case Pipe_Type::JOINCONNECT:
-        std::make_shared<std::thread>([=] (_Event & event) { handle->Handle(event); }, event)->join();
+        join_threads.push_back(std::make_shared<std::thread>([=] (_Event & event) { handle->Handle(current_type, event); }, event));
         break;
     default:
         break;
@@ -45,8 +48,9 @@ Core_Impl::PluginCoreInit(Core_Impl* core_impl) {
 }
 
 void 
-Core_Impl::Active(_Topic topic, _Event & event) {
+Core_Impl::Active(_Topic topic, _Event & event, Pipe_Type activate_way) {
     std::list<_Address> delete_subscribes{};
+    _Shared_Threads     join_threads{};
     { // Send data
         UniqueLock<ReadWriteLock> topic_lock(topic_locks_[topic]);
         auto & subscribers = topic_subscribers_[topic];
@@ -57,7 +61,7 @@ Core_Impl::Active(_Topic topic, _Event & event) {
                 subscriber++;
                 continue;
             }
-            SendData(subscriber->second, event);
+            SendData(subscriber->second, event, join_threads, activate_way);
             subscriber++;
         }
     }
@@ -71,7 +75,12 @@ Core_Impl::Active(_Topic topic, _Event & event) {
             }
         }
     }
-
+    
+    // wait joinable thread
+    for (_Shared_Thread join_thread : join_threads) {
+        if (join_thread->joinable())
+            join_thread->join();
+    }
 }
 
 bool 

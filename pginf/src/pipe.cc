@@ -26,9 +26,9 @@ Pipe::PulginInitImpl(Core_Impl * core_impl) {
 }
 
 void 
-Pipe::Send(_Topic topic, _Event * event) {
+Pipe::Send(_Topic topic, _Event * event, Pipe_Type pipe_type) {
     // To send data
-    Core_Impl::Get()->Active(topic, std::shared_ptr<_Event>(event));
+    Core_Impl::Get()->Active(topic, std::shared_ptr<_Event>(event), pipe_type);
 }
 
 PGINF_NAMESPACE_END()
