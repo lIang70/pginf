@@ -20,7 +20,7 @@ class Core_Impl {
     using _Event            = std::shared_ptr<EventMeta>;
     using _Shared_Thread    = std::shared_ptr<std::thread>;
     using _Shared_Threads   = std::vector<_Shared_Thread>;
-    using _Address          = std::array<unsigned char, 2 * sizeof(_Pointer)>;
+    using _Address          = std::array<unsigned char, 3 * sizeof(_Pointer)>;
     using _Subscribers      = std::map<_Topic, std::map<_Address, MsgHandle*>>;
     using _Topic_Lock       = std::map<_Topic, ReadWriteLock>;
 

@@ -9,7 +9,8 @@ Map::Init() {
 
     event_work_ = std::make_shared<std::thread>([&] {
         while (!thread_exit_) {
-            pginf::Pipe::Send(PipeEventType::PIPE_MAP_EVENT, new MapEvent);
+            std::shared_ptr<MapEvent> event(new MapEvent);
+            pginf::Pipe::Send(PipeEventType::PIPE_MAP_EVENT, event);
         }
     });
 

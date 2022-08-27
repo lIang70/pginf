@@ -7,13 +7,13 @@
 PGINF_NAMESPACE_BEGIN()
 
 bool 
-Pipe::_Subscribe(_Topic topic, _Address& address, MsgHandle* handle) {;
+Pipe::_Subscribe(_Topic topic, _Address address, MsgHandle* handle) {;
     // Subscription Data
     return Core_Impl::Get()->Subscribe(topic, address, handle);
 }
 
 void 
-Pipe::_Unsubscribe(_Topic topic, _Address& address) {;
+Pipe::_Unsubscribe(_Topic topic, _Address address) {;
     // Subscription Data
     Core_Impl::Get()->Unsubscribe(topic, address);
 }
@@ -26,9 +26,9 @@ Pipe::PulginInitImpl(Core_Impl * core_impl) {
 }
 
 void 
-Pipe::Send(_Topic topic, _Event * event, Pipe_Type pipe_type) {
+Pipe::Send(_Topic topic, _Event event, Pipe_Type pipe_type) {
     // To send data
-    Core_Impl::Get()->Active(topic, std::shared_ptr<_Event>(event), pipe_type);
+    Core_Impl::Get()->Active(topic, event, pipe_type);
 }
 
 PGINF_NAMESPACE_END()

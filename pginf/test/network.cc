@@ -9,7 +9,7 @@ Network::Init() {
 
     event_work_ = std::make_shared<std::thread>([&] {
         while (!thread_exit_) {
-            pginf::Pipe::Send(PipeEventType::PIPE_NETWORK_EVENT, new NetworkEvent);
+            pginf::Pipe::Send(PipeEventType::PIPE_NETWORK_EVENT, std::make_shared<NetworkEvent>());
         }
     });
 

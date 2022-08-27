@@ -17,8 +17,8 @@ class Core_Impl;
 class PGINF_API Pipe {
     using _Topic    = int;
     using _Pointer  = void*;
-    using _Address  = std::array<unsigned char, 2 * sizeof(_Pointer)>;
-    using _Event    = EventMeta;
+    using _Address  = std::array<unsigned char, 3 * sizeof(_Pointer)>;
+    using _Event    = std::shared_ptr<EventMeta>;
 
 private:
     // Delete constructors and destructors
@@ -31,7 +31,7 @@ private:
      ****************************************/
     template<typename A, typename B>
     static _Address ConvertAnyToFormat(const A type_a, const B type_b) {
-        static_assert(  bool(sizeof(A) + sizeof(B) <= 2 * sizeof(_Pointer)), 
+        static_assert(  bool(sizeof(A) + sizeof(B) <= 3 * sizeof(_Pointer)), 
                         "The size of both variables will overflow." );
         union Convert_t {
             struct { A element_a_; B element_b_; } base_;
@@ -50,7 +50,7 @@ private:
      * @param handle The function that receives data
      * @return If true, the subscription is successful
      ****************************************/
-    static bool _Subscribe(_Topic topic, _Address& address, MsgHandle* handle);
+    static bool _Subscribe(_Topic topic, _Address address, MsgHandle* handle);
 
     /****************************************
      * @brief Unsubscribe data.
@@ -58,7 +58,7 @@ private:
      * @param topic Topic to unsubscribe.
      * @param address Address of The function
      ****************************************/
-    static void _Unsubscribe(_Topic topic, _Address& address);
+    static void _Unsubscribe(_Topic topic, _Address address);
 
 public:
     /****************************************
@@ -74,7 +74,7 @@ public:
      * @param topic The topic to which data needs to be sent.
      * @param event Data to be sent.
      ****************************************/
-    static void Send(_Topic topic, _Event * event, Pipe_Type pipe_type = _Pipe_Type::DEFAULTCONNECT);
+    static void Send(_Topic topic, _Event event, Pipe_Type pipe_type = _Pipe_Type::DEFAULTCONNECT);
 
     /****************************************
      * @brief Subscribe to data for a topic.

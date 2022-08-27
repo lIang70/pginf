@@ -15,8 +15,10 @@ class MapEvent
 public:
     const char* greeting_ = "Hello PginF! This is a map event.";
 
-    MapEvent()              = default;
-    ~MapEvent() override    = default;
+    MapEvent() = default;
+    ~MapEvent() override {
+        
+    };
     
     // To release memory
     void Clear() override {
@@ -30,8 +32,10 @@ class NetworkEvent
 public:
     const char* greeting_ = "Hello PginF! This is a network event.";
 
-    NetworkEvent()              = default;
-    ~NetworkEvent() override    = default;
+    NetworkEvent() = default;
+    ~NetworkEvent() override {
+
+    };
     
     // To release memory
     void Clear() override {
