@@ -106,6 +106,8 @@
 #define PGINF_NAMESPACE_END()   NAMESPACE_END()
 #endif
 
+#define PGINF_VERSION           "beta-0.1"
+
 // Header
 #include <array>
 #include <map>

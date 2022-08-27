@@ -15,8 +15,8 @@ SET(CMAKE_INCLUDE_CURRENT_DIR ON)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 SET(CMAKE_CXX_STANDARD 11)
 
-OPTION(pginf_build_tests "Build all of pginf's own tests." ON)
-OPTION(pginf_build_with_debuginfo "Build pginf with DEBUG-INFO" ON)
+OPTION(pginf_build_tests "Build all of pginf's own tests." OFF)
+OPTION(pginf_build_with_debuginfo "Build pginf with DEBUG-INFO" OFF)
 
 IF (pginf_build_with_debuginfo)
     SET(CMAKE_BUILD_TYPE RelWithDebInfo)

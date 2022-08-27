@@ -24,7 +24,7 @@ ADD_LIBRARY(pginf STATIC ${TINYXML_SOURCES} ${PROJECT_SOURCES} ${HEADER_SOURCES}
 SET_TARGET_PROPERTIES(pginf PROPERTIES  ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib
                                         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
-OPTION(pginf_build_tests "Build all of pginf's own tests." ON)
+OPTION(pginf_build_tests "Build all of pginf's own tests." OFF)
 
 if (pginf_build_tests)
 
