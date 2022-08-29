@@ -6,4 +6,4 @@
 
 ![Overview](doc/overview.png)
 
-- The XML parser uses [TinyXML](https://sourceforge.net/projects/tinyxml/).
+- The XML parser is [TinyXML](https://sourceforge.net/projects/tinyxml/).
