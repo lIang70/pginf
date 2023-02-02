@@ -17,7 +17,7 @@ namespace log {
         DEBUG,
         INFO,
         WARNING,
-        ERROR,
+        Error,
         FATAL,
         NUM_LOG_LEVELS
     };
@@ -100,7 +100,7 @@ public:
 #define LOG_WARNING() \
     pginf::Logger(__FILE__, __LINE__, pginf::log::LogLevel::WARNING, __func__).stream()
 #define LOG_ERROR() \
-    pginf::Logger(__FILE__, __LINE__, pginf::log::LogLevel::ERROR, __func__).stream()
+    pginf::Logger(__FILE__, __LINE__, pginf::log::LogLevel::Error, __func__).stream()
 #define LOG_FATAL() \
     pginf::Logger(__FILE__, __LINE__, pginf::log::LogLevel::FATAL, __func__).stream()
 #define SYS_ERROR() \

@@ -152,7 +152,7 @@ Logger::Logger(FilePath file, int line, log::LogLevel level)
 }
 
 Logger::Logger(FilePath file, int line, bool abort)
-    : data_(abort ? log::LogLevel::FATAL : log::LogLevel::ERROR, errno, file, line)
+    : data_(abort ? log::LogLevel::FATAL : log::LogLevel::Error, errno, file, line)
 {
 }
 
