@@ -12,6 +12,6 @@ namespace util {
     extern std::string hostname();
 
 } // namespace util
-} // namespace hare
+} // namespace pginf
 
 #endif // !_PGINF_BASE_UTIL_SYSTEM_INFO_H_

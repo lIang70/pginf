@@ -45,6 +45,6 @@ namespace util {
     };
 
 } // namespace util
-} // namespace hare
+} // namespace pginf
 
 #endif // !_PGINF_BASE_COUNT_DOWN_LATCH_H_

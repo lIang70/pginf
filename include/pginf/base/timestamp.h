@@ -63,6 +63,6 @@ public:
     std::string toFormattedString(bool show_microseconds = true) const;
 };
 
-} // namespace hare
+} // namespace pginf
 
 #endif // !_PGINF_BASE_TIMESTAMP_H_

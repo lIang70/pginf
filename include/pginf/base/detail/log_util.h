@@ -88,6 +88,6 @@ namespace log {
     } // namespace detail
 
 } // namespace log
-} // namespace hare
+} // namespace pginf
 
 #endif // !_PGINF_BASE_LOG_UTIL_H_

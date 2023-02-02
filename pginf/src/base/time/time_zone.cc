@@ -257,4 +257,4 @@ TimeZone::TimeZone(std::unique_ptr<Data> data)
 {
 }
 
-} // namespace hare
+} // namespace pginf

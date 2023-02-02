@@ -35,6 +35,6 @@ namespace util {
     };
 
 } // namespace util
-} // namespace hare
+} // namespace pginf
 
 #endif // !_PGINF_BASE_FILE_H_

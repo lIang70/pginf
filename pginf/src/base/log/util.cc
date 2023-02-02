@@ -150,4 +150,4 @@ namespace log {
 
 } // namespace log
 
-} // namespace hare
+} // namespace pginf

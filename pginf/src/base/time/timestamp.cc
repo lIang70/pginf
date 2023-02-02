@@ -42,4 +42,4 @@ std::string Timestamp::toFormattedString(bool show_microseconds) const
     return buffer;
 }
 
-} // namespace hare
+} // namespace pginf

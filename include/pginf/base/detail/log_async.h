@@ -44,6 +44,6 @@ namespace log {
     };
 
 } // namespace log
-} // namespace hare
+} // namespace pginf
 
 #endif // !_PGINF_BASE_LOG_ASYNC_H_

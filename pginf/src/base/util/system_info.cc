@@ -67,4 +67,4 @@ namespace util {
     }
 
 } // namespace util
-} // namespace hare
+} // namespace pginf

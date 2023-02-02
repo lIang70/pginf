@@ -111,6 +111,6 @@ namespace time {
     }
 
 } // namespace time
-} // namespace hare
+} // namespace pginf
 
 #endif // !_PGINF_BASE_TIME_DATETIME_H_
