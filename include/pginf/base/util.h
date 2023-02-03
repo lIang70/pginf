@@ -24,6 +24,14 @@
 #define PGINF_API
 #endif
 
+#ifdef __cplusplus
+#define DLL_DECL extern "C" PGINF_API
+#else
+#define DLL_DECL PGINF_API
+#endif
+
+#define POLITE_STR(X) #X
+
 namespace pginf {
 
 inline PGINF_API void setZero(void* p, size_t n)
