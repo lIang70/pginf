@@ -1,9 +1,11 @@
 #ifndef _PGINF_BASE_THREAD_H_
 #define _PGINF_BASE_THREAD_H_
 
-#include "base/non_copyable.h"
-#include "base/types.h"
+#include <pginf/base/detail/non_copyable.h>
 
+#include <functional>
+#include <memory>
+#include <string>
 #include <thread>
 
 namespace pginf {

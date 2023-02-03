@@ -1,5 +1,5 @@
 #include "base/thread/local.h"
-#include "base/thread/thread.h"
+#include <pginf/base/thread.h>
 
 #include <gtest/gtest.h>
 
@@ -75,7 +75,7 @@ TEST(thread_tset, test_1)
         pginf::Thread t5(threadFunc3);
         t5.start();
     }
-    
+
     mysleep(2);
     {
         pginf::Thread t6(threadFunc3);

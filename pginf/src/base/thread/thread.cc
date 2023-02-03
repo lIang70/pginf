@@ -1,4 +1,3 @@
-#include "base/thread/thread.h"
 #include <pginf/base/system_check.h>
 #include "base/thread/local.h"
 #include "base/util/count_down_latch.h"

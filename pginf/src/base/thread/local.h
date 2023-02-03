@@ -1,7 +1,7 @@
 #ifndef _PGINF_BASE_LOCAL_H_
 #define _PGINF_BASE_LOCAL_H_
 
-#include "base/thread/thread.h"
+#include <pginf/base/thread.h>
 #include "base/types.h"
 
 namespace pginf {

@@ -1,7 +1,7 @@
 #ifndef _PGINF_BASE_FILE_H_
 #define _PGINF_BASE_FILE_H_
 
-#include "base/non_copyable.h"
+#include <pginf/base/detail/non_copyable.h>
 
 #include <stdint.h>
 #include <string>
