@@ -15,9 +15,9 @@ class PGINF_API Timestamp {
 public:
     static const int64_t MICROSECONDS_PER_SECOND { 1000 * 1000 };
 
-    ///
-    /// Get time of now.
-    ///
+    //!
+    //! Get time of now.
+    //!
     static Timestamp now();
     static Timestamp invalid()
     {

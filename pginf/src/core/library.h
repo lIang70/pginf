@@ -19,7 +19,7 @@ namespace core {
         using Id = std::string;
 
         // function for plugin
-        typedef void _Fn_Get_Id(std::string&);
+        using Fn_GetId = void(std::string&);
 
         Id identifier_ {}; // unique idetifier.
         Handle handle_for_library_ { nullptr }; // Library handle.
@@ -67,6 +67,8 @@ namespace core {
         ~Library();
 
         Library& operator=(Library&& another);
+
+        inline std::string id() { return identifier_; }
 
         //!
         //! @brief Get the symbol object

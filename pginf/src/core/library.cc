@@ -42,7 +42,6 @@ namespace core {
         }
 
         Handle handle = nullptr;
-        Id id {};
 
         try {
             // Load library - OS dependent operation
@@ -67,11 +66,11 @@ namespace core {
 
         try {
             // Get func [get_id]
-            _Fn_Get_Id* id_fn;
-            id_fn = reinterpret_cast<_Fn_Get_Id*>(getSymbol(handle, "get_id"));
+            Fn_GetId* get_id;
+            get_id = reinterpret_cast<Fn_GetId*>(getSymbol(handle, "getId"));
 
-            if (!id_fn) {
-                LOG_ERROR() << "Failed to load library[" << path << "]: [get_id] function not found!";
+            if (!get_id) {
+                LOG_ERROR() << "Failed to load library[" << path << "]: [getId] symbol not found!";
 #ifdef P_OS_WIN
                 ::FreeLibrary((HMODULE)handle);
 #else
@@ -81,7 +80,8 @@ namespace core {
             }
 
             // Get identifier
-            id_fn(id);
+            Id id {};
+            get_id(id);
 
             // return a library with the DLL handle
             return new Library(id, handle);
@@ -114,8 +114,7 @@ namespace core {
     Library::operator=(Library&& another)
     {
         identifier_.swap(another.identifier_);
-        handle_for_library_ = another.handle_for_library_;
-        another.handle_for_library_ = nullptr;
+        std::swap(handle_for_library_, another.handle_for_library_);
         return *this;
     }
 

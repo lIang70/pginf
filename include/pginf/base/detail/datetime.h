@@ -49,10 +49,10 @@ namespace time {
 
         Date() = default;
 
-        ///
-        /// Constucts a yyyy-mm-dd Date.
-        ///
-        /// 1 <= month <= 12
+        //!
+        //! Constucts a yyyy-mm-dd Date.
+        //!
+        //! 1 <= month <= 12
         Date(int32_t year, int32_t month, int32_t day);
 
         explicit Date(int32_t julian_day_number)
@@ -71,7 +71,7 @@ namespace time {
 
         bool valid() const { return julian_day_number_ > 0; }
 
-        /// Converts to yyyy-mm-dd format.
+        //! Converts to yyyy-mm-dd format.
         std::string toFmtString() const;
 
         struct YearMonthDay yearMonthDay() const;

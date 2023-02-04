@@ -108,11 +108,11 @@ public:
 #define SYS_FATAL() \
     pginf::Logger(__FILE__, __LINE__, true).stream()
 
-#define PGINF_ASSERT(val, what)                                \
-    do {                                                       \
-        if (!(val))                                            \
-            pginf::Logger(__FILE__, __LINE__, true).stream()   \
-                << "Condition " << #val << " failed." << what; \
+#define PGINF_ASSERT(val, what)                                 \
+    do {                                                        \
+        if (!(val))                                             \
+            pginf::Logger(__FILE__, __LINE__, true).stream()    \
+                << "Condition " << #val << " failed. " << what; \
     } while (0)
 
 #endif // !_PGINF_BASE_LOGGING_H_

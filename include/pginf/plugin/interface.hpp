@@ -5,35 +5,33 @@
 #include <pginf/plugin/host.h>
 #include <pginf/plugin/provider.h>
 
-#include <memory>
-
 // Macro: Create Provider.
-#define PGINF_PROVIDER_CREATE(object)                         \
-    class object##_Provider : public pginf::Provider {        \
-        friend class object;                                  \
-        using Type = std::string;                             \
-                                                              \
-    public:                                                   \
-        static const Version PGINF_INTER_VERSION;             \
-        static const Version PGINF_INTER_LOWEST_VERSION;      \
-        static const Type PGINF_PROVIDER_TYPE;                \
-                                                              \
-    public:                                                   \
-        inline const Type getProviderType() const override    \
-        {                                                     \
-            return PGINF_PROVIDER_TYPE;                       \
-        }                                                     \
-        inline const Version getInterVersion() const override \
-        {                                                     \
-            return PGINF_INTER_VERSION;                       \
-        }                                                     \
-        virtual object* create() const = 0;                   \
+#define PGINF_PROVIDER_CREATE(object)                          \
+    class object##_Provider : public pginf::plugin::Provider { \
+        friend class object;                                   \
+        using Type = std::string;                              \
+                                                               \
+    public:                                                    \
+        static const Version PGINF_INTER_VERSION;              \
+        static const Version PGINF_INTER_LOWEST_VERSION;       \
+        static const Type PGINF_PROVIDER_TYPE;                 \
+                                                               \
+    public:                                                    \
+        inline const Type getProviderType() const override     \
+        {                                                      \
+            return PGINF_PROVIDER_TYPE;                        \
+        }                                                      \
+        inline const Version getInterVersion() const override  \
+        {                                                      \
+            return PGINF_INTER_VERSION;                        \
+        }                                                      \
+        virtual object* create() const = 0;                    \
     };
 
 // Marcro: Init Provider type, version and lowest_version
-#define PGINF_PROVIDER_INIT(object_type, type, version, lower_version)                          \
-    const Provider::Version object_type##_Provider::PGINF_INTER_VERSION = version;              \
-    const Provider::Version object_type##_Provider::PGINF_INTER_LOWEST_VERSION = lower_version; \
+#define PGINF_PROVIDER_INIT(object_type, type, version, lower_version)                                 \
+    const pginf::plugin::Provider::Version object_type##_Provider::PGINF_INTER_VERSION = version;              \
+    const pginf::plugin::Provider::Version object_type##_Provider::PGINF_INTER_LOWEST_VERSION = lower_version; \
     const object_type##_Provider::Type object_type##_Provider::PGINF_PROVIDER_TYPE = POLITE_STR(type);
 
 // Marcro: Help plugins generating their Provider implementations
@@ -48,14 +46,14 @@
 
 // Macro: Create connect of plug-in
 #define PGINF_CONNECTOR_CREATE(specialized_object)                                                       \
-    DLL_DECL bool pginf_import(pginf::Host& host, std::string plugin_name)                               \
+    DLL_DECL bool importPlugin(pginf::Host& host, std::string plugin_name)                               \
     {                                                                                                    \
         return host.add(plugin_name, std::shared<pginf::Provider>(new specialized_object##_Provider())); \
     };
 
 // Macro: Define identifier of plug-in
 #define PGINF_DEFINE_PLUGINID(specialized_object_id)           \
-    DLL_DECL void get_id(std::string& plugin_identifier)       \
+    DLL_DECL void getId(std::string& plugin_identifier)        \
     {                                                          \
         plugin_identifier = POLITE_STR(specialized_object_id); \
     }
@@ -65,10 +63,15 @@ namespace pginf {
 //!
 //! @brief STI of pginf.
 //!
-class Interface : public std::enable_shared_from_this<Interface> {
+class Interface {
 
 public:
     virtual ~Interface() = default;
+
+    //!
+    //! @brief Init the plug-in.
+    //!
+    virtual void init() = 0;
 
     //!
     //! @brief Get the description of interface.
