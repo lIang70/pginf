@@ -1,4 +1,4 @@
-#include <pginf/plugin/manage.h>
+#include "core/manage_p.h"
 
 namespace pginf {
 namespace plugin {

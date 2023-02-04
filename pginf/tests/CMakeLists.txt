@@ -4,7 +4,7 @@ project(pginf_tests)
 
 include_directories(${CMAKE_SOURCE_DIR}/pginf/src ${CMAKE_SOURCE_DIR}/include/)
 
-file(GLOB_RECURSE ALL_TARGETS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/*.cc")
+file(GLOB ALL_TARGETS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/*.cc")
 
 foreach(TARGET IN LISTS ALL_TARGETS)
     # Get file name without directory

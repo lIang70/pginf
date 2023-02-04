@@ -2,12 +2,13 @@
 #define _PGINF_PLUGIN_INTERFACE_HPP_
 
 #include <pginf/base/util.h>
-#include <pginf/plugin/host.h>
+#include <pginf/plugin/manage.h>
 #include <pginf/plugin/provider.h>
 
 // Macro: Create Provider.
 #define PGINF_PROVIDER_CREATE(object)                          \
     class object##_Provider : public pginf::plugin::Provider { \
+        friend class pginf::plugin::Manage;                    \
         friend class object;                                   \
         using Type = std::string;                              \
                                                                \
@@ -29,7 +30,7 @@
     };
 
 // Marcro: Init Provider type, version and lowest_version
-#define PGINF_PROVIDER_INIT(object_type, type, version, lower_version)                                 \
+#define PGINF_PROVIDER_INIT(object_type, type, version, lower_version)                                         \
     const pginf::plugin::Provider::Version object_type##_Provider::PGINF_INTER_VERSION = version;              \
     const pginf::plugin::Provider::Version object_type##_Provider::PGINF_INTER_LOWEST_VERSION = lower_version; \
     const object_type##_Provider::Type object_type##_Provider::PGINF_PROVIDER_TYPE = POLITE_STR(type);
@@ -45,10 +46,11 @@
     };
 
 // Macro: Create connect of plug-in
-#define PGINF_CONNECTOR_CREATE(specialized_object)                                                       \
-    DLL_DECL bool importPlugin(pginf::Host& host, std::string plugin_name)                               \
-    {                                                                                                    \
-        return host.add(plugin_name, std::shared<pginf::Provider>(new specialized_object##_Provider())); \
+#define PGINF_CONNECTOR_CREATE(specialized_object)                                      \
+    DLL_DECL bool importPlugin(pginf::Manage& manage, std::string plugin_id)            \
+    {                                                                                   \
+        return manage.importProvider(plugin_id,                                         \
+            std::shared<pginf::manage::Provider>(new specialized_object##_Provider())); \
     };
 
 // Macro: Define identifier of plug-in

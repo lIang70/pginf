@@ -1,8 +1,8 @@
 #include "core/util.h"
 #include "core/library.h"
+#include "core/host.h"
 
 #include <pginf/base/logging.h>
-#include <pginf/plugin/host.h>
 
 namespace pginf {
 namespace core {
