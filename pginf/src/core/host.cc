@@ -33,6 +33,8 @@ namespace core {
             pm.cur_version_ = register_version;
             pm.lowest_version_ = lowest_version;
             known_type_providers_.insert(std::make_pair(type, std::move(pm)));
+        } else {
+            LOG_WARNING() << "Type[" << type << "] has already registered.";
         }
     }
 

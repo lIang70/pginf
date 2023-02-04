@@ -2,6 +2,7 @@
 #include "core/util.h"
 
 #include <pginf/base/logging.h>
+#include <pginf/plugin/interface.h>
 
 namespace pginf {
 namespace plugin {
@@ -11,6 +12,7 @@ namespace plugin {
         p_->main_host_.clearProviders();
         p_->main_host_.cancelAddictions();
         p_->libraries_info_.clear();
+        delete p_;
     }
 
     bool Manage::loadPlugin(const std::string& path)
@@ -90,6 +92,22 @@ namespace plugin {
         info.type_ = provider->getProviderType();
         p_->libraries_info_.insert(std::make_pair(plugin_id, std::move(info)));
         return ret;
+    }
+
+    Manage::Manage()
+        : p_(new ManagePrivate)
+    {
+        PGINF_REG_PTYPE(this, Interface);
+    }
+
+    void Manage::registerType(const std::string& type, Provider::Version cur_version, Provider::Version lowest_version) const
+    {
+        p_->main_host_.registerType(type, cur_version, lowest_version);
+    }
+
+    const std::map<std::string, std::shared_ptr<Provider>> Manage::getProviders(const std::string& type) const
+    {
+        return p_->main_host_.getProviders(type);
     }
 
 } // namespace plugin

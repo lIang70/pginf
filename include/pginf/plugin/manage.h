@@ -140,4 +140,6 @@ namespace plugin {
 } // namespace plugin
 } // namespace pginf
 
+#define PGINF_REG_PTYPE(manage, interface) manage->acceptProviderType<interface##_Provider>()
+
 #endif // !_PGINF_PLUGIN_MANAGE_H_
