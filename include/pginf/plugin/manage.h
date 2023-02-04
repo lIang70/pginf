@@ -89,13 +89,13 @@ namespace plugin {
         //!
         //! @tparam Type of Registration
         //!
-        template <typename Provider>
+        template <typename _Tp>
         void acceptProviderType()
         {
             registerType(
-                Provider::PGINF_PROVIDER_TYPE,
-                Provider::PGINF_INTER_VERSION,
-                Provider::PGINF_INTER_LOWEST_VERSION);
+                _Tp::PGINF_PROVIDER_TYPE,
+                _Tp::PGINF_INTER_VERSION,
+                _Tp::PGINF_INTER_LOWEST_VERSION);
         }
 
         //!
@@ -105,10 +105,10 @@ namespace plugin {
         //! @return Pointer to the list of providers of that \a type,
         //! or nullptr if \a type is not registered.
         //!
-        template <typename Provider>
-        const std::map<std::string, std::shared_ptr<Provider>> GetProviders() const
+        template <typename _Tp>
+        const std::map<std::string, std::shared_ptr<Provider>> getProviders() const
         {
-            return getProviders(Provider::PGINF_PROVIDER_TYPE);
+            return getProviders(_Tp::PGINF_PROVIDER_TYPE);
         }
 
     protected:
@@ -141,5 +141,6 @@ namespace plugin {
 } // namespace pginf
 
 #define PGINF_REG_PTYPE(manage, interface) manage->acceptProviderType<interface##_Provider>()
+#define PGINF_GET_PROVI(manage, interface) manage->getProviders<interface##_Provider>()
 
 #endif // !_PGINF_PLUGIN_MANAGE_H_

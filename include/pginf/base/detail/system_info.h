@@ -7,7 +7,7 @@
 namespace pginf {
 namespace util {
 
-    extern std::string system_dir();
+    extern std::string systemdir();
     extern int32_t pid();
     extern std::string hostname();
 

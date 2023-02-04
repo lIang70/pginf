@@ -51,7 +51,7 @@ namespace util {
 
     } // namespace detail
 
-    std::string system_dir()
+    std::string systemdir()
     {
         return detail::s_system_info.system_dir;
     }

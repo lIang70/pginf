@@ -17,3 +17,5 @@ foreach(TARGET IN LISTS ALL_TARGETS)
     gtest_discover_tests(${TARGET_NAME})
 
 endforeach()
+
+add_subdirectory(plugin_test)

@@ -44,7 +44,7 @@ protected:
     {
         total_size_ = 0;
         pginf::Logger::setOutput(&AsyncTest::output);
-        std::string name = pginf::util::system_dir() + "async_test";
+        std::string name = pginf::util::systemdir() + "async_test";
         async_ = new pginf::log::Async(name, 16 * 1024 * 1024);
         async_->start();
     }
@@ -57,14 +57,14 @@ protected:
         printf("%f seconds, %.2f Mbytes, %.2f MiB/s\n",
             seconds, total_size_ / double(1024 * 1024), total_size_ / seconds / (1024 * 1024));
 
-        auto dir = ::opendir(pginf::util::system_dir().c_str());
+        auto dir = ::opendir(pginf::util::systemdir().c_str());
         EXPECT_NE(dir, nullptr);
         std::regex reg("(.*)(async_test)(.*)log");
         while (auto ptr = ::readdir(dir)) {
             if (!ptr)
                 break;
             if (std::regex_match(ptr->d_name, reg)) {
-                EXPECT_GE(::remove((pginf::util::system_dir() + ptr->d_name).c_str()), 0);
+                EXPECT_GE(::remove((pginf::util::systemdir() + ptr->d_name).c_str()), 0);
             }
         }
     }

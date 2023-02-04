@@ -57,7 +57,7 @@ public:
 
     void benchForLogFile(const char* file_name, bool long_log = false)
     {
-        log_file_.reset(new pginf::log::File(pginf::util::system_dir() + file_name, 200 * 1000));
+        log_file_.reset(new pginf::log::File(pginf::util::systemdir() + file_name, 200 * 1000));
         pginf::Logger::setOutput(&LoggingTest::output);
         pginf::Logger::setFlush(&LoggingTest::flush);
 
@@ -77,19 +77,19 @@ public:
         pginf::Timestamp end(pginf::Timestamp::now());
         double seconds = pginf::Timestamp::difference(end, start);
         printf("%12s: %f seconds, %.2f Mbytes, %10.2f msg/s, %.2f MiB/s\n",
-            (pginf::util::system_dir() + file_name).c_str(),
+            (pginf::util::systemdir() + file_name).c_str(),
             seconds, total_size_ / double(1024 * 1024), n / seconds, total_size_ / seconds / (1024 * 1024));
 
         log_file_.reset();
 
-        auto dir = ::opendir(pginf::util::system_dir().c_str());
+        auto dir = ::opendir(pginf::util::systemdir().c_str());
         EXPECT_NE(dir, nullptr);
         std::regex reg("(.*)(" + std::string(file_name) + ")(.*)log");
         while (auto ptr = ::readdir(dir)) {
             if (!ptr)
                 break;
             if (std::regex_match(ptr->d_name, reg)) {
-                EXPECT_GE(::remove((pginf::util::system_dir() + ptr->d_name).c_str()), 0);
+                EXPECT_GE(::remove((pginf::util::systemdir() + ptr->d_name).c_str()), 0);
             }
         }
         pginf::Logger::setOutput(nullptr);
@@ -165,12 +165,12 @@ TEST_F(LoggingTest, logging_bench_long_log_for_log_file)
 
 TEST_F(LoggingTest, logging_bench_short_log)
 {
-    bench((pginf::util::system_dir() + "tmp.log").c_str());
+    bench((pginf::util::systemdir() + "tmp.log").c_str());
 }
 
 TEST_F(LoggingTest, logging_bench_long_log)
 {
-    bench((pginf::util::system_dir() + "tmp.log").c_str(), true);
+    bench((pginf::util::systemdir() + "tmp.log").c_str(), true);
 }
 
 int main(int argc, char** argv)
