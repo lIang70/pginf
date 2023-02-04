@@ -42,6 +42,22 @@ namespace core {
 
     public:
         //!
+        //! @brief Construct a new Host object.
+        //! New Host instances are not publicly allowed.
+        //!
+        Host() = default;
+
+        //!
+        //! @brief Destroy the Host object.
+        //! Clears all hosted providers
+        //!
+        ~Host()
+        {
+            clearProviders();
+            cancelAddictions();
+        }
+
+        //!
         //! @brief Add provider.
         //!
         //! Provider type and version are checked. Only known and
@@ -59,7 +75,7 @@ namespace core {
         //! @param type  Provider's type
         //! @param provider_id Provider's identifier.
         //!
-        void remove(std::string& type, std::string& provider_id);
+        void remove(std::string& type, const std::string& provider_id);
 
         //!
         //! @brief Register a type of providers.
@@ -167,23 +183,6 @@ namespace core {
         //! @return True if provider is compatible with host.
         //!
         bool isCompatible(std::shared_ptr<Provider>& provider) const;
-
-    private:
-        //!
-        //! @brief Construct a new Host object.
-        //! New Host instances are not publicly allowed.
-        //!
-        Host() = default;
-
-        //!
-        //! @brief Destroy the Host object.
-        //! Clears all hosted providers
-        //!
-        ~Host()
-        {
-            clearProviders();
-            cancelAddictions();
-        }
     };
 
 } // namespace core

@@ -21,7 +21,7 @@ namespace core {
         // function for plugin
         using Fn_GetId = void(std::string&);
 
-        Id identifier_ {}; // unique idetifier.
+        Id id_ {}; // unique idetifier.
         Handle handle_for_library_ { nullptr }; // Library handle.
 
     private:
@@ -68,8 +68,6 @@ namespace core {
 
         Library& operator=(Library&& another);
 
-        inline std::string id() { return identifier_; }
-
         //!
         //! @brief Get the symbol object
         //!
@@ -77,6 +75,8 @@ namespace core {
         //! @return Pointer to what the symbol refers to, or nullptr if the symbol is not found.
         //!
         Symbol getSymbol(const std::string& symbol_name);
+
+        inline std::string id() { return id_; }
     };
 
 } // namespace plugin

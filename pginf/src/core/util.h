@@ -3,14 +3,15 @@
 
 #include "base/types.h"
 
+#include <pginf/plugin/manage.h>
+
 namespace pginf {
 namespace core {
-    class Host;
     class Library;
 
-    using Fn_ImportPlugin = bool(Host&, std::string); // Plugin registration function
+    using Fn_ImportPlugin = bool(plugin::Manage&, std::string); // Plugin registration function
 
-    extern std::shared_ptr<Library> loadPlugin(std::shared_ptr<Host>& host, const std::string& path);
+    extern std::shared_ptr<Library> loadPlugin(std::shared_ptr<plugin::Manage>& manage, const std::string& path);
 
 } // namespace core
 } // namespace plugin

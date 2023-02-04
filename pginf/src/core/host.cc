@@ -6,7 +6,7 @@ namespace core {
     bool Host::add(std::string& provider_id, std::shared_ptr<plugin::Provider> provider)
     {
         if (!provider) {
-            LOG_ERROR() << "Trying to add a null provider.";
+            LOG_ERROR() << "Trying to add a NULL provider.";
             return false;
         }
         if (!checkProvider(provider)) {
@@ -18,7 +18,7 @@ namespace core {
         return true;
     }
 
-    void Host::remove(std::string& type, std::string& provider_id)
+    void Host::remove(std::string& type, const std::string& provider_id)
     {
         if (known_type_providers_.find(type) != known_type_providers_.end()) {
             known_type_providers_[type].providers_.erase(provider_id);

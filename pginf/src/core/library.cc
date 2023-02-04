@@ -28,7 +28,7 @@ namespace core {
     }
 
     Library::Library(Id id, Handle handle)
-        : identifier_(id)
+        : id_(id)
         , handle_for_library_(handle)
     {
         // Nothing to do
@@ -94,7 +94,7 @@ namespace core {
 
     Library::Library(Library&& another)
     {
-        identifier_.swap(another.identifier_);
+        id_.swap(another.id_);
         handle_for_library_ = another.handle_for_library_;
         another.handle_for_library_ = nullptr;
     }
@@ -113,7 +113,7 @@ namespace core {
     Library&
     Library::operator=(Library&& another)
     {
-        identifier_.swap(another.identifier_);
+        id_.swap(another.id_);
         std::swap(handle_for_library_, another.handle_for_library_);
         return *this;
     }

@@ -7,7 +7,7 @@
 namespace pginf {
 namespace core {
 
-    std::shared_ptr<Library> loadPlugin(std::shared_ptr<Host>& host, const std::string& path)
+    std::shared_ptr<Library> loadPlugin(std::shared_ptr<plugin::Manage>& manage, const std::string& path)
     {
         std::shared_ptr<Library> lib(Library::load(path));
         if (!lib)
@@ -24,7 +24,7 @@ namespace core {
         }
 
         // try to initialize plugin:
-        if (!import_plugin(*host, lib->id())) {
+        if (!import_plugin(*manage, lib->id())) {
             // plugin decided to fail
             LOG_ERROR() << "Failed to import plug-in[" << lib->id() << "].";
             lib.reset();
