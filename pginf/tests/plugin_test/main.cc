@@ -72,6 +72,8 @@ int main(int argc, char** argv)
 {
     ::testing::InitGoogleTest(&argc, argv);
 
+    pginf::TimeZone tz(8 * 3600, "UTC");
+    pginf::Logger::setTimeZone(tz);
     pginf::Logger::setLogLevel(pginf::log::LogLevel::TRACE);
 
     return RUN_ALL_TESTS();

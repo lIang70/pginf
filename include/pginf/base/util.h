@@ -43,6 +43,7 @@
 #endif
 
 #define POLITE_STR(X) #X
+#define UNUSED(x) (void)(x)
 
 namespace pginf {
 
