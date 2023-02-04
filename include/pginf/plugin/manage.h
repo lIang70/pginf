@@ -106,7 +106,7 @@ namespace plugin {
         //! or nullptr if \a type is not registered.
         //!
         template <typename _Tp>
-        const std::map<std::string, std::shared_ptr<Provider>> getProviders() const
+        std::map<std::string, std::shared_ptr<Provider>> getProviders() const
         {
             return getProviders(_Tp::PGINF_PROVIDER_TYPE);
         }
@@ -134,7 +134,7 @@ namespace plugin {
         //! @return Pointer to the list of providers of that \a type,
         //!  or nullptr if \a type is not registered.
         //!
-        const std::map<std::string, std::shared_ptr<Provider>> getProviders(const std::string& type) const;
+        std::map<std::string, std::shared_ptr<Provider>> getProviders(const std::string& type) const;
     };
 
 } // namespace plugin

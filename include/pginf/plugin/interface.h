@@ -5,6 +5,8 @@
 #include <pginf/plugin/manage.h>
 #include <pginf/plugin/provider.h>
 
+#include <memory>
+
 // Macro: Create Provider.
 #define PGINF_PROVIDER_CREATE(object)                          \
     class object##_Provider : public pginf::plugin::Provider { \
@@ -46,11 +48,11 @@
     };
 
 // Macro: Create connect of plug-in
-#define PGINF_CONNECTOR_CREATE(specialized_object)                                      \
-    DLL_DECL bool importPlugin(pginf::Manage& manage, std::string plugin_id)            \
-    {                                                                                   \
-        return manage.importProvider(plugin_id,                                         \
-            std::shared<pginf::manage::Provider>(new specialized_object##_Provider())); \
+#define PGINF_CONNECTOR_CREATE(specialized_object)                                          \
+    DLL_DECL bool importPlugin(pginf::plugin::Manage& manage, std::string plugin_id)        \
+    {                                                                                       \
+        return manage.importProvider(plugin_id,                                             \
+            std::shared_ptr<pginf::plugin::Provider>(new specialized_object##_Provider())); \
     };
 
 // Macro: Define identifier of plug-in
@@ -91,7 +93,6 @@ public:
 };
 
 PGINF_PROVIDER_CREATE(Interface)
-PGINF_PROVIDER_INIT(Interface, STI, 1, 1)
 
 } // namespace pginf
 

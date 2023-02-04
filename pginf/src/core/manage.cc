@@ -5,13 +5,16 @@
 #include <pginf/plugin/interface.h>
 
 namespace pginf {
+
+// Init STI infomation.
+PGINF_PROVIDER_INIT(Interface, STI, 2, 1)
+
 namespace plugin {
 
     Manage::~Manage()
     {
-        p_->main_host_.clearProviders();
         p_->main_host_.cancelAddictions();
-        p_->libraries_info_.clear();
+        unloadAll();
         delete p_;
     }
 
@@ -105,7 +108,7 @@ namespace plugin {
         p_->main_host_.registerType(type, cur_version, lowest_version);
     }
 
-    const std::map<std::string, std::shared_ptr<Provider>> Manage::getProviders(const std::string& type) const
+    std::map<std::string, std::shared_ptr<Provider>> Manage::getProviders(const std::string& type) const
     {
         return p_->main_host_.getProviders(type);
     }

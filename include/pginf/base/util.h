@@ -3,7 +3,9 @@
 
 #include <pginf/base/system_check.h>
 
+#include <list>
 #include <string.h>
+#include <string>
 
 #ifdef P_OS_WIN32
 #ifndef PGINF_STATIC
@@ -28,6 +30,16 @@
 #define DLL_DECL extern "C" PGINF_API
 #else
 #define DLL_DECL PGINF_API
+#endif
+
+// Macros: Ext of plug-in
+#ifdef P_OS_WIN32
+#define PGINF_EXTENSION "dll"
+#elif defined(P_OS_UNIX)
+#define PGINF_EXTENSION "so"
+#else
+// unknown library file type
+#error Unknown library file extension for this operating system.
 #endif
 
 #define POLITE_STR(X) #X
@@ -99,6 +111,12 @@ inline PGINF_API To implicit_cast(From const& f)
     return f;
 }
 
-}
+namespace file {
+
+    void PGINF_API listFiles(std::list<std::string>& list,
+        const std::string& folder_path, const std::string& extension, bool recursive);
+
+} // namespace file
+} // namespace pginf
 
 #endif // !_PGINF_BASE_UTIL_H_

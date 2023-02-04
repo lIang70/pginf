@@ -126,7 +126,7 @@ namespace core {
         //! @return Pointer to the list of providers of that \a type,
         //! or nullptr if \a type is not registered.
         //!
-        inline const std::map<std::string,
+        inline std::map<std::string,
             std::shared_ptr<Provider>>
         getProviders(const std::string& type) const
         {
