@@ -10,6 +10,8 @@ namespace core {
             return false;
         }
         if (!checkProvider(provider)) {
+            auto p = provider.get();
+            delete p;
             return false;
         }
 

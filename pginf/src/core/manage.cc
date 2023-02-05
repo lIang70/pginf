@@ -87,8 +87,9 @@ namespace plugin {
             return false;
         }
         auto ret = p_->main_host_.add(plugin_id, provider);
-        if (!ret)
+        if (!ret) {
             return ret;
+        }
         ManagePrivate::library_info info;
         info.id_ = plugin_id;
         info.type_ = provider->getProviderType();
