@@ -16,6 +16,7 @@ namespace core {
     class Host : public std::enable_shared_from_this<Host> {
         using Provider = plugin::Provider;
         using Version = Provider::Version;
+        using Weak_Providers = std::map<std::string, std::weak_ptr<Provider>>;
 
         struct provide_manage {
             Version cur_version_ {};
@@ -126,16 +127,18 @@ namespace core {
         //! @return Pointer to the list of providers of that \a type,
         //! or nullptr if \a type is not registered.
         //!
-        inline std::map<std::string,
-            std::shared_ptr<Provider>>
-        getProviders(const std::string& type) const
+        Weak_Providers getProviders(const std::string& type) const
         {
             auto iter = known_type_providers_.find(type);
-            if (iter != known_type_providers_.end())
-                return iter->second.providers_;
+            if (iter != known_type_providers_.end()) {
+                Weak_Providers wp;
+                for (auto& item : iter->second.providers_) {
+                    wp.insert(std::make_pair(item.first, item.second));
+                }
+                return wp;
+            }
 
-            return std::map<std::string,
-                std::shared_ptr<Provider>>();
+            return Weak_Providers();
         }
 
     protected:

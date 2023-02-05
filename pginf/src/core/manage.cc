@@ -48,8 +48,7 @@ namespace plugin {
     {
         auto iter = p_->libraries_info_.find(plugin_id);
         if (iter != p_->libraries_info_.end()) {
-            auto type = p_->libraries_info_[plugin_id].type_;
-            p_->main_host_.remove(type, plugin_id);
+            p_->main_host_.remove(p_->libraries_info_[plugin_id].type_, plugin_id);
             p_->libraries_info_.erase(plugin_id);
             p_->plugin_cnt_--;
             LOG_INFO() << "Plug-in[" << plugin_id << "] is uninstalled.";
@@ -108,7 +107,7 @@ namespace plugin {
         p_->main_host_.registerType(type, cur_version, lowest_version);
     }
 
-    std::map<std::string, std::shared_ptr<Provider>> Manage::getProviders(const std::string& type) const
+    Manage::Weak_Providers Manage::getProviders(const std::string& type) const
     {
         return p_->main_host_.getProviders(type);
     }

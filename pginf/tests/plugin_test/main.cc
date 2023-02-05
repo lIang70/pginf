@@ -35,7 +35,7 @@ public:
         }
     }
 
-    inline std::map<std::string, std::shared_ptr<Provider>> getProvides()
+    inline pginf::plugin::Manage::Weak_Providers getProvides()
     {
         return PGINF_GET_PROVI(plugin_manage_, pginf::Interface);
     }
@@ -50,19 +50,21 @@ TEST_F(PluginTest, LoadPluginFromFolder)
     loadFromFolder();
 
     auto providers = getProvides();
-    for (auto& p : providers) {
-        LOG_INFO() << "Provider[" << p.first
-                   << "]\n  type: " << p.second->getProviderType()
-                   << "\n  version: " << p.second->getInterVersion();
-        if (p.second->getProviderType() == "STI") {
-            auto provider = static_cast<pginf::Interface_Provider*>(p.second.get());
+    for (auto& tp : providers) {
+        auto p = tp.second.lock();
+        if (!p)
+            continue;
+        LOG_INFO() << "Provider[" << tp.first
+                   << "]\n  type: " << p->getProviderType()
+                   << "\n  version: " << p->getInterVersion();
+        if (p->getProviderType() == "STI") {
+            auto provider = static_cast<pginf::Interface_Provider*>(p.get());
             auto object = provider->create();
             LOG_INFO() << "Plugin[" << object->getName()
                        << "]\n  Description: " << object->getDescription();
             delete object;
         }
     }
-    providers.clear();
 
     std::string id = "Decode.20230205";
     EXPECT_EQ(unload(id), true);

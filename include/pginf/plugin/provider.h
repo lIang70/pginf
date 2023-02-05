@@ -41,6 +41,12 @@ namespace plugin {
         virtual const std::string getProviderType() const = 0;
     };
 
+    namespace detail {
+        struct NotFree {
+            void operator()(Provider* x) {}
+        };
+    } // namespace detail
+
 } // namespace plugin
 } // namespace pginf
 

@@ -13,9 +13,12 @@ namespace plugin {
 
     class ManagePrivate;
     class PGINF_API Manage : public std::enable_shared_from_this<Manage> {
+
         ManagePrivate* p_ { nullptr };
 
     public:
+        using Weak_Providers = std::map<std::string, std::weak_ptr<Provider>>;
+
         virtual ~Manage();
 
         //!
@@ -106,7 +109,7 @@ namespace plugin {
         //! or nullptr if \a type is not registered.
         //!
         template <typename _Tp>
-        std::map<std::string, std::shared_ptr<Provider>> getProviders() const
+        Weak_Providers getProviders() const
         {
             return getProviders(_Tp::PGINF_PROVIDER_TYPE);
         }
@@ -134,7 +137,7 @@ namespace plugin {
         //! @return Pointer to the list of providers of that \a type,
         //!  or nullptr if \a type is not registered.
         //!
-        std::map<std::string, std::shared_ptr<Provider>> getProviders(const std::string& type) const;
+        Weak_Providers getProviders(const std::string& type) const;
     };
 
 } // namespace plugin

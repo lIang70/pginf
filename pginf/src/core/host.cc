@@ -48,7 +48,9 @@ namespace core {
         for (auto& ppair : request_for_addition_) {
             auto list = ppair.second;
             for (auto& provide : list) {
-                known_type_providers_[ppair.first].providers_.insert(provide);
+                // Move the memory location of share_ptr from DLL to Host.
+                decltype(provide.second) tmp(provide.second.get());
+                known_type_providers_[ppair.first].providers_.insert(std::make_pair(provide.first, tmp));
             }
         }
 

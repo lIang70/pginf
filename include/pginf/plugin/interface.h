@@ -20,6 +20,7 @@
         static const Type PGINF_PROVIDER_TYPE;                 \
                                                                \
     public:                                                    \
+        ~object##_Provider() override = default;               \
         inline const Type getProviderType() const override     \
         {                                                      \
             return PGINF_PROVIDER_TYPE;                        \
@@ -48,11 +49,12 @@
     };
 
 // Macro: Create connect of plug-in
-#define PGINF_CONNECTOR_CREATE(specialized_object)                                          \
-    DLL_DECL bool importPlugin(pginf::plugin::Manage& manage, std::string plugin_id)        \
-    {                                                                                       \
-        return manage.importProvider(plugin_id,                                             \
-            std::shared_ptr<pginf::plugin::Provider>(new specialized_object##_Provider())); \
+#define PGINF_CONNECTOR_CREATE(specialized_object)                                        \
+    DLL_DECL bool importPlugin(pginf::plugin::Manage& manage, std::string plugin_id)      \
+    {                                                                                     \
+        return manage.importProvider(plugin_id,                                           \
+            std::shared_ptr<pginf::plugin::Provider>(new specialized_object##_Provider(), \
+                pginf::plugin::detail::NotFree()));                                       \
     };
 
 // Macro: Define identifier of plug-in

@@ -40,7 +40,11 @@ public:
             : data_(arr)
             , size_(Length - 1)
         {
+#ifdef M_OS_WIN32
+            const char* slash = strrchr(data_, '\\'); // builtin function
+#else
             const char* slash = strrchr(data_, '/'); // builtin function
+#endif
             if (slash) {
                 data_ = slash + 1;
                 size_ -= static_cast<int32_t>(data_ - arr);
@@ -50,7 +54,11 @@ public:
         explicit FilePath(const char* file_name)
             : data_(file_name)
         {
+#ifdef M_OS_WIN32
+            const char* slash = strrchr(file_name, '\\');
+#else
             const char* slash = strrchr(file_name, '/');
+#endif
             if (slash) {
                 data_ = slash + 1;
             }
