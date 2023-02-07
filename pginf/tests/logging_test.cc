@@ -1,4 +1,4 @@
-#include <pginf/base/detail/log_file.h>
+#include "base/log/file.h"
 #include <pginf/base/detail/system_info.h>
 #include <pginf/base/logging.h>
 #include <pginf/base/thread_pool.h>

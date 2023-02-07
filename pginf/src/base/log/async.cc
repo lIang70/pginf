@@ -1,7 +1,7 @@
 #include <pginf/base/detail/log_async.h>
 
+#include "base/log/file.h"
 #include "base/util/count_down_latch.h"
-#include <pginf/base/detail/log_file.h>
 #include <pginf/base/exception.h>
 #include <pginf/base/thread.h>
 #include <pginf/base/timestamp.h>

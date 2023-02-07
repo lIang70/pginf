@@ -1,17 +1,12 @@
 #ifndef _PGINF_BASE_LOG_FILE_H_
 #define _PGINF_BASE_LOG_FILE_H_
 
+#include "base/util/file.h"
+
 #include <memory>
 #include <mutex>
 
 namespace pginf {
-
-namespace util {
-
-    class AppendFile;
-
-} // namespace util
-
 namespace log {
 
     class File {

@@ -26,9 +26,9 @@ namespace time {
         // "yyyy-MM-dd HH:MM:SS"
         std::string toFmtString() const;
 
-        int32_t year { 0 }; // [1900, 2500]
-        int32_t month { 0 }; // [1, 12]
-        int32_t day { 0 }; // [1, 31]
+        int32_t year { 1900 }; // [1900, 2500]
+        int32_t month { 1 }; // [1, 12]
+        int32_t day { 1 }; // [1, 31]
         int32_t hour { 0 }; // [0, 23]
         int32_t minute { 0 }; // [0, 59]
         int32_t second { 0 }; // [0, 59]
