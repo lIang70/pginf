@@ -34,6 +34,7 @@ public:
     explicit Thread(Task task, const std::string& name = std::string());
     ~Thread();
 
+    bool isRunning();
     void start();
     bool join();
 

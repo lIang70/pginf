@@ -1,15 +1,16 @@
 #ifndef _PGINF_BASE_COUNT_DOWN_LATCH_H_
 #define _PGINF_BASE_COUNT_DOWN_LATCH_H_
 
-#include "base/types.h"
+#include <condition_variable>
+#include <mutex>
 
 namespace pginf {
 namespace util {
 
     class CountDownLatch {
         mutable std::mutex mutex_ {};
-        uint32_t count_ GUARDED_BY(mutex_) { 0 };
-        std::condition_variable GUARDED_BY(mutex_) cv_ {};
+        uint32_t count_ { 0 };
+        std::condition_variable cv_ {};
 
     public:
         explicit CountDownLatch(uint32_t count)

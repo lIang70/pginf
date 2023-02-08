@@ -77,7 +77,12 @@ public:
     //!
     //! @brief Init the plug-in.
     //!
-    virtual void init() = 0;
+    virtual void load() = 0;
+
+    //!
+    //! @brief Init the plug-in.
+    //!
+    virtual void unload() = 0;
 
     //!
     //! @brief Get the description of interface.

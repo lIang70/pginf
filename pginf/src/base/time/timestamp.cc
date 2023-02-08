@@ -1,7 +1,6 @@
 #include <pginf/base/timestamp.h>
 
-#include "base/types.h"
-
+#include <chrono>
 #include <inttypes.h>
 
 namespace pginf {

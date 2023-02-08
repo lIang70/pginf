@@ -11,7 +11,7 @@ namespace time {
     // Local time in unspecified timezone.
     // A minute is always 60 seconds, no leap seconds.
     struct DateTime {
-        DateTime() { }
+        DateTime() = default;
         explicit DateTime(const struct tm&);
         DateTime(int32_t _year, int32_t _month, int32_t _day, int32_t _hour, int32_t _minute, int32_t _second)
             : year(_year)

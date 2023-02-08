@@ -159,8 +159,11 @@ Logger::Logger(FilePath file, int line, bool abort)
 Logger::~Logger()
 {
     data_.finish();
-    const log::Stream::Buffer& buf(stream().buffer());
-    log::g_output(buf.data(), buf.length());
+
+    if (data_.level_ >= log::g_log_level) {
+        const log::Stream::Buffer& buf(stream().buffer());
+        log::g_output(buf.data(), buf.length());
+    }
 
     if (data_.level_ == log::LogLevel::FATAL) {
         log::g_flush();

@@ -5,11 +5,16 @@ public:
     Net()
     {
     }
+    
     ~Net() override
     {
     }
 
-    void init() override
+    void load() override
+    {
+    }
+
+    void unload() override
     {
     }
 

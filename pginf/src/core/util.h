@@ -1,9 +1,9 @@
 #ifndef _PGINF_CORE_UTIL_H_
 #define _PGINF_CORE_UTIL_H_
 
-#include "base/types.h"
-
 #include <pginf/plugin/manage.h>
+
+#include <memory>
 
 namespace pginf {
 namespace core {

@@ -17,10 +17,10 @@ namespace log {
         Thread thread_;
         util::CountDownLatch latch_ { 1 };
         std::mutex mutex_ {};
-        std::condition_variable cv_ GUARDED_BY(mutex_) {};
-        BPtr current_block_ GUARDED_BY(mutex_) { new Block };
-        BPtr next_block_ GUARDED_BY(mutex_) { new Block };
-        BlockV blocks_ GUARDED_BY(mutex_) {};
+        std::condition_variable cv_ {};
+        BPtr current_block_ { new Block };
+        BPtr next_block_ { new Block };
+        BlockV blocks_ {};
 
         Data(Async* async)
             : async_(async)

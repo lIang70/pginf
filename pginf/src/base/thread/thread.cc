@@ -5,6 +5,8 @@
 #include <pginf/base/exception.h>
 #include <pginf/base/logging.h>
 
+#include <atomic>
+
 #ifdef P_OS_WIN32
 #include <Windows.h>
 
@@ -113,6 +115,12 @@ Thread::~Thread()
     if (data_)
         delete data_;
 }
+
+bool Thread::isRunning()
+{
+    return started_;
+}
+
 
 void Thread::start()
 {

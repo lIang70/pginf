@@ -2,7 +2,6 @@
 #define _PGINF_BASE_LOCAL_H_
 
 #include <pginf/base/thread.h>
-#include "base/types.h"
 
 namespace pginf {
 

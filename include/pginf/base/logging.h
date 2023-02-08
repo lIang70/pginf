@@ -9,7 +9,6 @@
 #include <functional>
 
 namespace pginf {
-
 namespace log {
 
     enum class LogLevel : int32_t {

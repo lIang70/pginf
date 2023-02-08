@@ -5,11 +5,16 @@ public:
     Decode()
     {
     }
+    
     ~Decode() override
     {
     }
 
-    void init() override
+    void load() override
+    {
+    }
+
+    void unload() override
     {
     }
 
